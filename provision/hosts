@@ -1,0 +1,10 @@
+[junos]
+spine01 ip=10.0.1.2 ansible_ssh_host=10.0.1.2
+spine02 ip=10.0.1.6 ansible_ssh_host=10.0.1.6
+leaf03 ip=10.0.1.10 ansible_ssh_host=10.0.1.10
+leaf04 ip=10.0.1.14 ansible_ssh_host=10.0.1.14
+
+[all:vars]
+ansible_user=root
+ansible_ssh_pass=Juniper
+ansible_ssh_port=22

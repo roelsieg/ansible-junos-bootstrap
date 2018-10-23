@@ -1,0 +1,81 @@
+system {
+    host-name {{ device.host_name }};
+    services {
+        ssh {
+            root-login allow;
+        }
+        netconf {
+            ssh;
+        }
+    }
+}
+interfaces {
+    {{ link.0.interface }} {
+        unit 0 {
+            description "{{ link.0.name }}";
+            family inet {
+                address {{ link.0.ip }}/{{ link.0.subnet }};
+            }
+        }
+    }
+	{{ link.1.interface }} {
+        unit 0 {
+            description "{{ link.1.name }}";
+            family inet {
+                address {{ link.1.ip }}/{{ link.1.subnet }};
+            }
+        }
+    }
+	{{ link.2.interface }} {
+        unit 0 {
+            description "{{ link.2.name }}";
+            family inet {
+                address {{ link.2.ip }}/{{ link.2.subnet }};
+            }
+        }
+    }
+}
+protocols {
+    lldp {
+        interface all;
+    }
+    bgp {
+        group underlay {
+            import bgp-in;
+            export bgp-out;
+            type external;
+            local-as {{ device.asn }};
+            multipath multiple-as;
+            neighbor {{ link.0.neighbor.peer_ip }} {
+                peer-as {{ link.0.neighbor.asn }};
+            }
+			neighbor {{ link.1.neighbor.peer_ip }} {
+                peer-as {{ link.1.neighbor.asn }};
+            }
+			neighbor {{ link.2.neighbor.peer_ip }} {
+                peer-as {{ link.2.neighbor.asn }};
+            }
+        }
+    }
+}
+
+routing-options {
+    router-id {{ loopback.0.ip }};
+    forwarding-table {
+        export bgp-ecmp;
+    }
+}
+
+policy-options {
+    policy-statement bgp-ecmp {
+        then {
+            load-balance per-packet;
+        }
+    }
+    policy-statement bgp-in {
+        then accept;
+    }
+    policy-statement bgp-out {
+        then accept;
+    }
+}

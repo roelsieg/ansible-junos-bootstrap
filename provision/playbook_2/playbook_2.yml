@@ -1,0 +1,27 @@
+---
+- name: Build and deploy configuration
+  hosts: all
+  connection: local
+  gather_facts: no
+  roles:
+    - juniper.junos
+  tasks:
+   - name: Build configuration
+     template: src=template.j2 dest=/tmp/{{ device.host_name }}.conf
+ 
+   - name: Checking NETCONF connectivity
+     wait_for: 
+        host: "{{ ansible_ssh_host }}" 
+        port: 830  
+        timeout: 5
+
+   - name: Merge configuration data from a file and commit
+     juniper_junos_config: 
+        host: "{{ ansible_ssh_host }}"
+        port: 830 
+        timeout: 15
+        load: "merge"
+        format: "text"
+        src: "/tmp/{{ device.host_name }}.conf"
+        comment: "Configuring op script with Ansible"
+#        register: response

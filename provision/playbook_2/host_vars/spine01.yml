@@ -1,0 +1,37 @@
+---
+device:
+   host_name: spine01
+   asn: 104
+
+loopback:
+ - interface: lo0
+   name: loopback0
+   ip: 10.20.1.1
+
+link:
+ - interface: "ge-0/0/1"
+   name: to leaf03
+   ip: "{{ ipspace.nldc01_xfr1.ips.xfr_a }}"
+   subnet: "{{ ipspace.nldc01_xfr1.cidr }}"
+   neighbor: leaf03
+ - interface: "ge-0/0/2"
+   name: to leaf04
+   ip: "{{ ipspace.nldc01_xfr2.ips.xfr_a }}"
+   subnet: "{{ ipspace.nldc01_xfr2.cidr }}"
+   neighbor: leaf04
+ - interface: "ge-0/0/3"
+   name: to spine02
+   ip: "{{ ipspace.nldc01_xfr3.ips.xfr_a }}"
+   subnet: "{{ ipspace.nldc01_xfr3.cidr }}"
+   neighbor: spine02
+
+neighbor:
+   spine02:
+     asn: 105
+     peer_ip: "{{ ipspace.nldc01_xfr3.ips.xfr_b }}"
+   leaf03:
+     asn: 109
+     peer_ip: "{{ ipspace.nldc01_xfr1.ips.xfr_b }}"
+   leaf04:
+     asn: 110
+     peer_ip: "{{ ipspace.nldc01_xfr2.ips.xfr_b }}"

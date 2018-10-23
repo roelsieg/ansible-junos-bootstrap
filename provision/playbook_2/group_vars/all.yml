@@ -1,0 +1,62 @@
+---
+ipspace:
+  nldc01_xfr1:
+    subnet: 172.16.0.0
+    subnetmask: 255.255.255.254
+    cidr: "31"
+    usage: xfr_spine01-leaf03
+    dhcp: false
+    ips:
+      xfr_a: 172.16.0.0
+      xfr_b: 172.16.0.1
+    location: nldc01
+  nldc01_xfr2:
+    subnet: 172.16.0.2
+    subnetmask: 255.255.255.254
+    cidr: "31"
+    usage: xfr_spine01-leaf04
+    dhcp: false
+    ips:
+      xfr_a: 172.16.0.2
+      xfr_b: 172.16.0.3
+    location: nldc01
+  nldc01_xfr3:
+    subnet: 172.16.0.4
+    subnetmask: 255.255.255.254
+    cidr: "31"
+    usage: xfr_spine01-spine02
+    dhcp: false
+    ips:
+      xfr_a: 172.16.0.4
+      xfr_b: 172.16.0.5
+    location: nldc01
+  nldc01_xfr4:
+    subnet: 172.16.0.6
+    subnetmask: 255.255.255.254
+    cidr: "31"
+    usage: xfr_spine02-leaf03
+    dhcp: false
+    ips:
+      xfr_a: 172.16.0.6
+      xfr_b: 172.16.0.7
+    location: nldc01
+  nldc01_xfr5:
+    subnet: 172.16.0.8
+    subnetmask: 255.255.255.254
+    cidr: "31"
+    usage: xfr_spine02-leaf04
+    dhcp: false
+    ips:
+      xfr_a: 172.16.0.8
+      xfr_b: 172.16.0.9
+    location: nldc01
+  nldc01_xfr6:
+    subnet: 172.16.0.10
+    subnetmask: 255.255.255.254
+    cidr: "31"
+    usage: xfr_spine02-leaf04
+    dhcp: false
+    ips:
+      xfr_a: 172.16.0.10
+      xfr_b: 172.16.0.11
+    location: nldc01

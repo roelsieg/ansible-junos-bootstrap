@@ -1,0 +1,29 @@
+---
+- name: Build and deploy configuration
+  hosts: all
+  connection: local
+  gather_facts: no
+  roles:
+    - juniper.junos
+  tasks:
+  # - name: Print diff between current and rollback "{{ rbid }}"
+  #   juniper_junos_config:
+  #      config_mode: exclusive
+  #      host: "{{ ansible_ssh_host }}"
+  #     rollback: "{{ rbid }}"
+  #      diff: true
+  #      check: false
+  #      commit: false
+  #   register: response
+  # - name: Print the msg.
+  #   debug:
+  #     var: response
+   - name: Rollback to "{{ rbid }}" configs back.
+     juniper_junos_config:
+       host: "{{ ansible_ssh_host }}"
+       config_mode: 'private'
+       rollback: "{{ rbid }}"
+     register: response
+   - name: Print the config changes.
+     debug:
+       var: response.diff_lines
